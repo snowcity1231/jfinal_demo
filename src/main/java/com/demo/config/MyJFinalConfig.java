@@ -6,6 +6,7 @@ import com.jfinal.config.Interceptors;
 import com.jfinal.config.JFinalConfig;
 import com.jfinal.config.Plugins;
 import com.jfinal.config.Routes;
+import com.jfinal.render.ViewType;
 
 /**
  * Description: 
@@ -27,7 +28,10 @@ public class MyJFinalConfig extends JFinalConfig {
 	}
 
 	@Override
-	public void configConstant(Constants me) {}
+	public void configConstant(Constants me) {
+		me.setDevMode(true);
+		me.setViewType(ViewType.JSP);
+	}
 	
 	@Override
 	public void configPlugin(Plugins me) {
