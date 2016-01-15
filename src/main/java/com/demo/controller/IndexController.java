@@ -1,5 +1,9 @@
 package com.demo.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.jfinal.core.ActionKey;
 import com.jfinal.core.Controller;
 
 /**
@@ -16,5 +20,24 @@ import com.jfinal.core.Controller;
 public class IndexController extends Controller {
 	public void index() {
 		renderText("index");
+	}
+	
+	public void list() {
+		String strNum = getPara(0);
+		List<Integer> list = new ArrayList<Integer>();
+		int n = 0;
+		if(strNum != null){
+			n = getParaToInt(0);
+		}
+		if(n > 0){
+			for(int i=1; i<=n; i++){
+				list.add(i);
+			}
+		}
+		if(list.size() > 0){
+			renderText(list.toString());
+		}else{
+			renderText("no list");
+		}
 	}
 }

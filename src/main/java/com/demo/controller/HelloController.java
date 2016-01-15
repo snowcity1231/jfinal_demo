@@ -1,4 +1,4 @@
-package demo;
+package com.demo.controller;
 
 import com.jfinal.core.ActionKey;
 import com.jfinal.core.Controller;
@@ -12,16 +12,22 @@ import com.jfinal.core.Controller;
  * <p>
  * @Author xuechen
  * <p>
- * @Version 2.0.0  2016-1-7 下午3:36:34
+ * @Version 2.0.0  2016-1-15 下午4:07:43
  */
 public class HelloController extends Controller {
+
 	public void index() {
-		renderText("Hello JFinal World!");
+		renderText("Hello Jfinal World.");
 	}
 	
+	/**
+	 * 使用actionKey注解，/method直接等于/hello/method
+	 */
+	@ActionKey("/method")
 	public void method() {
-		String param = getPara(1);
-		renderText("this is " + param);
+		//路径，method/vo-v1 ‘vo-v1’即两个参数，用'-'分开
+		String name = getPara(0);
+		renderText("Hello " + name);
 	}
-	
+
 }

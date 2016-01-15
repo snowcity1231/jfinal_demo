@@ -1,5 +1,6 @@
 package com.demo.controller;
 
+import com.jfinal.core.ActionKey;
 import com.jfinal.core.Controller;
 
 /**
@@ -14,7 +15,13 @@ import com.jfinal.core.Controller;
  * @Version 2.0.0  2016-1-7 下午5:29:10
  */
 public class BlogController extends Controller {
+	
 	public void index() {
 		renderText("blog");
+	}
+	
+	@ActionKey("/login")
+	public void login() {
+		renderText("LOGIN");
 	}
 }
