@@ -1,6 +1,8 @@
 package com.demo.config;
 
+
 import com.demo.controller.HelloController;
+import com.demo.model.Blog;
 import com.jfinal.config.Constants;
 import com.jfinal.config.Handlers;
 import com.jfinal.config.Interceptors;
@@ -10,8 +12,8 @@ import com.jfinal.config.Routes;
 import com.jfinal.kit.Prop;
 import com.jfinal.kit.PropKit;
 import com.jfinal.log.Logger;
+import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 import com.jfinal.plugin.druid.DruidPlugin;
-import com.jfinal.plugin.redis.RedisPlugin;
 import com.jfinal.render.ViewType;
 
 /**
@@ -71,9 +73,13 @@ public class MyJFinalConfig extends JFinalConfig {
 		
 		// 非第一次使用 use加载的配置，也可以先得到一个Prop对象，再通过该对象来获取值
 		Prop p = PropKit.use("db_config.properties");
-		DruidPlugin dp = new DruidPlugin(p.get("url"), p.get("userName"), p.get("password"), p.get("driverClassName"));
+		DruidPlugin dp = new DruidPlugin(p.get("url"), p.get("username"), p.get("password"), p.get("driverClassName"));
 		log.info("DruidPlugin 配置完成");
 		me.add(dp);
+		
+		ActiveRecordPlugin arp = new ActiveRecordPlugin(dp);
+		arp.addMapping("blog", Blog.class);
+		me.add(arp);
 	}
 
 	/**
