@@ -15,6 +15,20 @@ import com.jfinal.core.Controller;
  */
 public class UserController extends Controller {
 	public void index() {
-		renderText("user");
+		//从seesion中读取数据
+		//HttpSession session = getSession();
+		//System.out.println(session.getAttribute("user"));
+		String user = getSessionAttr("user");
+		renderText("welcome to JFinal, " + user + "!");
 	}
+	
+	public void login(){
+		String userName = getPara("userName");
+		String pwd = getPara("password");
+		//向session中存储数据
+		setSessionAttr("user", userName);
+		setAttr("userName", userName);
+		renderJsp("/jsp/admin/user.jsp");
+	}
+	
 }
