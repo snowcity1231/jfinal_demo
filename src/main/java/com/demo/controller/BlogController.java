@@ -1,5 +1,10 @@
 package com.demo.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import com.demo.model.Blog;
 import com.jfinal.core.ActionKey;
 import com.jfinal.core.Controller;
@@ -22,11 +27,6 @@ public class BlogController extends Controller {
 		renderText("blog");
 	}
 	
-	@ActionKey("/login")
-	public void login() {
-		renderText("LOGIN");
-	}
-	
 	/**
 	 * getModel方法，setAttr方法
 	 */
@@ -35,8 +35,11 @@ public class BlogController extends Controller {
 		//文件默认上传至项目 根路径下的 upload 子路径 之下
 		//客户端请求为multipart request，必须先调用getFile方法才能使getPara系列方法正常工作
 		UploadFile upFile = getFile("img");
-		String fileName = upFile.getFileName();
-		String imgUrl = "upload/" + fileName;
+		String imgUrl = "";
+		if(null != upFile){
+			String fileName = upFile.getFileName();
+			imgUrl = "upload/" + fileName;
+		}
 		
 		// 页面的modelName正好是Blog类名的首字母小写
 		Blog blog = getModel(Blog.class);
@@ -45,7 +48,7 @@ public class BlogController extends Controller {
 		setAttr("title", title);
 		setAttr("content", content);
 		setAttr("path", imgUrl);
-		renderJsp("/jsp/blogInfo.jsp");
+		renderJsp("blogInfo.jsp");
 		
 		
 		// 如果表单域的名称为 "otherName.title"可加上一个参数来获取

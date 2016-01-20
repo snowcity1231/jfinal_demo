@@ -2,6 +2,7 @@ package com.demo.config;
 
 
 import com.demo.controller.HelloController;
+import com.demo.controller.RenderController;
 import com.demo.model.Blog;
 import com.jfinal.config.Constants;
 import com.jfinal.config.Handlers;
@@ -42,6 +43,8 @@ public class MyJFinalConfig extends JFinalConfig {
 		me.setDevMode(PropKit.getBoolean("devMode"));
 		//默认视图配置为JSP
 		me.setViewType(ViewType.JSP);
+//		me.setViewType(ViewType.FREE_MARKER);
+		
 	}
 
 	/**
@@ -51,6 +54,7 @@ public class MyJFinalConfig extends JFinalConfig {
 	public void configRoute(Routes me) {
 		//使用controllerKey访问路由
 		me.add("/hello", HelloController.class);
+		me.add("/render", RenderController.class, "/jsp");
 		
 		//将路由进行拆分设置
 		me.add(new FrontRoutes());		//前端路由

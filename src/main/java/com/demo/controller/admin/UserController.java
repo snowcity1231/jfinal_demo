@@ -28,7 +28,7 @@ public class UserController extends Controller {
 		//向session中存储数据
 		setSessionAttr("user", userName);
 		setAttr("userName", userName);
-		renderJsp("/jsp/admin/user.jsp");
+		renderJsp("admin/user.jsp");
 	}
 	
 }
