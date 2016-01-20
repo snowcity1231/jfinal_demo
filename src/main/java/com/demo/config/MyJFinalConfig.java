@@ -1,6 +1,7 @@
 package com.demo.config;
 
 
+import com.demo.aop.GlobalActionInterceptor;
 import com.demo.controller.HelloController;
 import com.demo.controller.RenderController;
 import com.demo.model.Blog;
@@ -90,7 +91,16 @@ public class MyJFinalConfig extends JFinalConfig {
 	 * 配置全局拦截器
 	 */
 	@Override
-	public void configInterceptor(Interceptors me) {}
+	public void configInterceptor(Interceptors me) {
+		//添加控制层全局拦截器
+		me.addGlobalActionInterceptor(new GlobalActionInterceptor());
+		
+		//添加业务层全局拦截器
+		//me.addGlobalServiceInterceptor();
+		
+		//兼容老版本方法，功能与addGlobalActionInterceptor一样
+//		me.add(new GlobalActionInterceptor());
+	}
 
 	/**
 	 * 配置处理器

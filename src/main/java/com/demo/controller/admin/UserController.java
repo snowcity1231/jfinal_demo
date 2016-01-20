@@ -1,5 +1,8 @@
 package com.demo.controller.admin;
 
+import com.demo.aop.DemoInterceptor;
+import com.demo.aop.UserInterceptor;
+import com.jfinal.aop.Before;
 import com.jfinal.core.Controller;
 
 /**
@@ -14,6 +17,9 @@ import com.jfinal.core.Controller;
  * @Version 2.0.0  2016-1-7 下午5:31:11
  */
 public class UserController extends Controller {
+	
+	//可以配置多个拦截器
+	@Before({DemoInterceptor.class, UserInterceptor.class})
 	public void index() {
 		//从seesion中读取数据
 		//HttpSession session = getSession();

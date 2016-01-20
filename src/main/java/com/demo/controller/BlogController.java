@@ -5,7 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.demo.aop.BlogInterceptor;
+import com.demo.aop.DemoInterceptor;
 import com.demo.model.Blog;
+import com.jfinal.aop.Before;
 import com.jfinal.core.ActionKey;
 import com.jfinal.core.Controller;
 import com.jfinal.upload.UploadFile;
@@ -30,6 +33,8 @@ public class BlogController extends Controller {
 	/**
 	 * getModel方法，setAttr方法
 	 */
+	//method级别的拦截器
+	@Before(BlogInterceptor.class)
 	public void save() {
 		
 		//文件默认上传至项目 根路径下的 upload 子路径 之下

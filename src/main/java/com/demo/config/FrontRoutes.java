@@ -19,7 +19,7 @@ public class FrontRoutes extends Routes {
 
 	@Override
 	public void config() {
-		add("/", IndexController.class, "/jsp");
+		add("/index", IndexController.class, "/jsp");
 		add("/blog", BlogController.class, "/jsp");
 	}
 

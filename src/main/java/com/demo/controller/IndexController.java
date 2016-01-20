@@ -3,6 +3,8 @@ package com.demo.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.demo.aop.DemoInterceptor;
+import com.jfinal.aop.Before;
 import com.jfinal.core.ActionKey;
 import com.jfinal.core.Controller;
 
@@ -17,6 +19,7 @@ import com.jfinal.core.Controller;
  * <p>
  * @Version 2.0.0  2016-1-7 下午5:28:58
  */
+
 public class IndexController extends Controller {
 	public void index() {
 		renderText("index");
@@ -25,13 +28,14 @@ public class IndexController extends Controller {
 	/**
 	 * getPara系列方法
 	 */
-	public void showPara(){
+	public String showPara(){
 		//返回 url 请求中的 urlPara 参数的整体值
 		//注意：约定字母 N与 n可以表示负 号，这对urlParaSeparator为“-”时非常有用
 		String para = getPara();
 		
-		System.out.println(getParaToInt(2));	//参数为2-5-N8时，输出-8
+		//System.out.println(getParaToInt(2));	//参数为2-5-N8时，输出-8
 		renderText(para);
+		return para;
 	}
 	
 	public void list() {
