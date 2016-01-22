@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.demo.aop.DemoInterceptor;
 import com.jfinal.aop.Before;
+import com.jfinal.aop.Clear;
 import com.jfinal.core.ActionKey;
 import com.jfinal.core.Controller;
 
@@ -19,8 +20,10 @@ import com.jfinal.core.Controller;
  * <p>
  * @Version 2.0.0  2016-1-7 下午5:28:58
  */
-
 public class IndexController extends Controller {
+	//clear注解在class层，针对global,inject拦截器进行清除
+	@Clear
+	
 	public void index() {
 		renderText("index");
 	}

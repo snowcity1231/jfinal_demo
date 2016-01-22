@@ -7,8 +7,11 @@ import java.util.Map;
 
 import com.demo.aop.BlogInterceptor;
 import com.demo.aop.DemoInterceptor;
+import com.demo.aop.Tx;
 import com.demo.model.Blog;
+import com.demo.service.BlogService;
 import com.jfinal.aop.Before;
+import com.jfinal.aop.Enhancer;
 import com.jfinal.core.ActionKey;
 import com.jfinal.core.Controller;
 import com.jfinal.upload.UploadFile;
@@ -58,6 +61,28 @@ public class BlogController extends Controller {
 		
 		// 如果表单域的名称为 "otherName.title"可加上一个参数来获取
 		//blog = getModel(Blog.class, "otherName");
+	}
+	
+	/**
+	 * 业务层AOP
+	 */
+	public void info(){
+		int blogId = getParaToInt(0);
+		//使用enhance方法对业务层进行增强，使其具有AOP能力
+		BlogService service = enhance(BlogService.class);
+		//调用info方法时会触发拦截器
+		service.info(blogId);
+		
+		renderText(Integer.toString(blogId));
+	}
+	
+	public void injectBlog(){
+		//为enhance方法传入的拦截器称为Inject拦截器，下面代码中的Tx称为Inject拦截器
+		//使用此拦截器可以无侵入的对目标进行AOP增强
+		//inject拦截器被认为class级别的拦截器，不过次序在Class级别拦截器之前
+		BlogService service = Enhancer.enhance(BlogService.class, Tx.class);
+		service.inject();
+		renderText("injectBlog");
 	}
 	
 }
