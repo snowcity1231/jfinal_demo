@@ -5,6 +5,7 @@ import com.demo.aop.GlobalActionInterceptor;
 import com.demo.controller.HelloController;
 import com.demo.controller.RenderController;
 import com.demo.model.Blog;
+import com.demo.model.User;
 import com.jfinal.config.Constants;
 import com.jfinal.config.Handlers;
 import com.jfinal.config.Interceptors;
@@ -13,7 +14,6 @@ import com.jfinal.config.Plugins;
 import com.jfinal.config.Routes;
 import com.jfinal.kit.Prop;
 import com.jfinal.kit.PropKit;
-import com.jfinal.log.Logger;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 import com.jfinal.plugin.druid.DruidPlugin;
 import com.jfinal.render.ViewType;
@@ -31,7 +31,6 @@ import com.jfinal.render.ViewType;
  */
 public class MyJFinalConfig extends JFinalConfig {
 	
-	protected static final Logger log = Logger.getLogger(MyJFinalConfig.class);
 	
 	/**
 	 * 配置JFinal常量值
@@ -79,11 +78,14 @@ public class MyJFinalConfig extends JFinalConfig {
 		// 非第一次使用 use加载的配置，也可以先得到一个Prop对象，再通过该对象来获取值
 		Prop p = PropKit.use("db_config.properties");
 		DruidPlugin dp = new DruidPlugin(p.get("url"), p.get("username"), p.get("password"), p.get("driverClassName"));
-		log.info("DruidPlugin 配置完成");
+		System.out.println("DruidPlugin 配置完成");
 		me.add(dp);
 		
 		ActiveRecordPlugin arp = new ActiveRecordPlugin(dp);
+		//表的主键名默认为"id"
 		arp.addMapping("blog", Blog.class);
+		//表的主键名称为"userId"
+		arp.addMapping("user", "userId", User.class);
 		me.add(arp);
 	}
 
@@ -113,7 +115,7 @@ public class MyJFinalConfig extends JFinalConfig {
 	 */
 	@Override
 	public void afterJFinalStart() {
-		log.info("jfinal_demo 已启动...");
+		System.out.println("jfinal_demo 已启动...");
 	}
 
 	/**
@@ -121,7 +123,7 @@ public class MyJFinalConfig extends JFinalConfig {
 	 */
 	@Override
 	public void beforeJFinalStop() {
-		log.info("jfinal_demo 已关闭");
+		System.out.println("jfinal_demo 已关闭");
 	}
 
 }
