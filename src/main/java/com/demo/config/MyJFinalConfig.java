@@ -4,8 +4,7 @@ package com.demo.config;
 import com.demo.aop.GlobalActionInterceptor;
 import com.demo.controller.HelloController;
 import com.demo.controller.RenderController;
-import com.demo.model.Blog;
-import com.demo.model.User;
+import com.demo.model._MappingKit;
 import com.jfinal.config.Constants;
 import com.jfinal.config.Handlers;
 import com.jfinal.config.Interceptors;
@@ -82,11 +81,13 @@ public class MyJFinalConfig extends JFinalConfig {
 		me.add(dp);
 		
 		ActiveRecordPlugin arp = new ActiveRecordPlugin(dp);
-		//表的主键名默认为"id"
-		arp.addMapping("blog", Blog.class);
-		//表的主键名称为"userId"
-		arp.addMapping("user", "userId", User.class);
+		_MappingKit.mapping(arp);
 		me.add(arp);
+//		//表的主键名默认为"id"
+//		arp.addMapping("blog", Blog.class);
+//		//表的主键名称为"userId"
+//		arp.addMapping("user", "userId", User.class);
+//		me.add(arp);
 	}
 
 	/**

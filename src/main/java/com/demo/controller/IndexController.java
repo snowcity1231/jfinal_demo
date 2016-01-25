@@ -3,10 +3,7 @@ package com.demo.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.demo.aop.DemoInterceptor;
-import com.jfinal.aop.Before;
 import com.jfinal.aop.Clear;
-import com.jfinal.core.ActionKey;
 import com.jfinal.core.Controller;
 
 /**

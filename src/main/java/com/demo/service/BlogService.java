@@ -1,6 +1,7 @@
 package com.demo.service;
 
 import com.demo.aop.Tx;
+import com.demo.model.Blog;
 import com.jfinal.aop.Before;
 
 /**
@@ -17,8 +18,9 @@ import com.jfinal.aop.Before;
 public class BlogService {
 	
 	@Before(Tx.class)
-	public void info(int blogId){
-		System.out.println(blogId);
+	public Blog info(int blogId){
+		Blog blog = Blog.dao.findById(blogId);
+		return blog;
 	}
 	
 	public void inject(){

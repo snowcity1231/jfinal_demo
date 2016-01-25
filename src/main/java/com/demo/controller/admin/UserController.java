@@ -22,7 +22,7 @@ import com.jfinal.plugin.activerecord.Page;
  */
 public class UserController extends Controller {
 	
-	private User userDao = User.userDao;
+	private User userDao = User.dao;
 	
 	//可以配置多个拦截器
 	@Before({DemoInterceptor.class, UserInterceptor.class})
@@ -37,10 +37,22 @@ public class UserController extends Controller {
 	public void login(){
 		String userName = getPara("userName");
 		String pwd = getPara("password");
-		//向session中存储数据
-		setSessionAttr("user", userName);
-		setAttr("userName", userName);
-		renderJsp("admin/user.jsp");
+		List<User> list = userDao.find("select * from t_user where user_name = ?", userName);
+		if(null != list && list.size() > 0){
+			User user = list.get(0);
+			if(user.getPassword().equals(pwd)){
+				//向session中存储数据
+				setSessionAttr("user", userName);
+				setAttr("userName", userName);
+				renderJsp("admin/user.jsp");
+			}else{
+				renderText("password error");
+			}
+		}else{
+			renderText("username or password error");
+		}
+		
+		
 	}
 	
 	/**

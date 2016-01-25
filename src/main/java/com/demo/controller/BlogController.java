@@ -1,18 +1,11 @@
 package com.demo.controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import com.demo.aop.BlogInterceptor;
-import com.demo.aop.DemoInterceptor;
 import com.demo.aop.Tx;
 import com.demo.model.Blog;
 import com.demo.service.BlogService;
 import com.jfinal.aop.Before;
 import com.jfinal.aop.Enhancer;
-import com.jfinal.core.ActionKey;
 import com.jfinal.core.Controller;
 import com.jfinal.upload.UploadFile;
 
@@ -51,6 +44,7 @@ public class BlogController extends Controller {
 		
 		// 页面的modelName正好是Blog类名的首字母小写
 		Blog blog = getModel(Blog.class);
+		blog.save();
 		String title = blog.getStr("title");
 		String content = blog.getStr("content");
 		setAttr("title", title);
@@ -71,9 +65,8 @@ public class BlogController extends Controller {
 		//使用enhance方法对业务层进行增强，使其具有AOP能力
 		BlogService service = enhance(BlogService.class);
 		//调用info方法时会触发拦截器
-		service.info(blogId);
-		
-		renderText(Integer.toString(blogId));
+		Blog blog = service.info(blogId);
+		renderText(blog.getTitle());
 	}
 	
 	public void injectBlog(){

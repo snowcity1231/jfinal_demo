@@ -60,8 +60,12 @@ public class RenderController extends Controller {
 	 */
 	public void jsonList() {
 		List<User> userList = new ArrayList<User>();
-		User user1 = new User("tom", 11);
-		User user2 = new User("jack", 7);
+		User user1 = new User();
+		user1.setUserName("tom");
+		user1.setAge(11);
+		User user2 = new User();
+		user2.setUserName("jack");
+		user2.setAge(7);
 		userList.add(user1);
 		userList.add(user2);
 		renderJson("users", userList);
@@ -71,7 +75,9 @@ public class RenderController extends Controller {
 	 * 将user对象转换成json对象
 	 */
 	public void jsonObj() {
-		User user = new User("David", 18);
+		User user = new User();
+		user.setUserName("David");
+		user.setAge(17);
 		renderJson(user);
 	}
 	
@@ -86,7 +92,9 @@ public class RenderController extends Controller {
 	 * 仅将user和blog转换成json，其他通过setAttr()方法设置的属性不转换
 	 */
 	public void jsonAttr() {
-		User user = new User("Bob", 31);
+		User user = new User();
+		user.setUserName("Bob");
+		user.setAge(31);
 		Blog blog = new Blog();
 		blog.set("title", "mytitle");
 		blog.set("content", "mycontent");
