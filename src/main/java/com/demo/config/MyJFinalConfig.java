@@ -14,6 +14,10 @@ import com.jfinal.config.Routes;
 import com.jfinal.kit.Prop;
 import com.jfinal.kit.PropKit;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
+import com.jfinal.plugin.activerecord.tx.TxByActionKeyRegex;
+import com.jfinal.plugin.activerecord.tx.TxByActionKeys;
+import com.jfinal.plugin.activerecord.tx.TxByMethodRegex;
+import com.jfinal.plugin.activerecord.tx.TxByMethods;
 import com.jfinal.plugin.druid.DruidPlugin;
 import com.jfinal.render.ViewType;
 
@@ -103,6 +107,15 @@ public class MyJFinalConfig extends JFinalConfig {
 		
 		//兼容老版本方法，功能与addGlobalActionInterceptor一样
 //		me.add(new GlobalActionInterceptor());
+		
+		//通过正则对method进行拦截并开启事务
+		//me.add(new TxByMethodRegex("(.*save*.|.*update*.)"));
+		//对指定method进行拦截并开启事务
+		//me.add(new TxByMethods("save", "update"));
+		//通过正则对action进行拦截
+		//me.add(new TxByActionKeyRegex("/trans.*"));
+		//对指定的actionKey进行拦截
+		me.add(new TxByActionKeys("/account/trans", "/account/save","/account/update"));
 	}
 
 	/**
