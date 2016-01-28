@@ -19,6 +19,7 @@ import com.jfinal.plugin.activerecord.tx.TxByActionKeys;
 import com.jfinal.plugin.activerecord.tx.TxByMethodRegex;
 import com.jfinal.plugin.activerecord.tx.TxByMethods;
 import com.jfinal.plugin.druid.DruidPlugin;
+import com.jfinal.plugin.ehcache.EhCachePlugin;
 import com.jfinal.render.ViewType;
 
 /**
@@ -92,6 +93,8 @@ public class MyJFinalConfig extends JFinalConfig {
 //		//表的主键名称为"userId"
 //		arp.addMapping("user", "userId", User.class);
 //		me.add(arp);
+		
+		me.add(new EhCachePlugin("src/main/resources/ehcache.xml"));
 	}
 
 	/**
