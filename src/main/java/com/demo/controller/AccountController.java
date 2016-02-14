@@ -20,7 +20,7 @@ import com.jfinal.plugin.activerecord.tx.Tx;
 public class AccountController extends Controller {
 	
 	/**
-	 * 生命Tx拦截器，为action添加事务支持
+	 * 声明Tx拦截器，为action添加事务支持
 	 */
 	@Before(Tx.class)
 	public void trans() {

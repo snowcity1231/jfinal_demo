@@ -19,6 +19,7 @@ public class DemoInterceptor implements Interceptor {
 
 	@Override
 	public void intercept(Invocation inv) {
+		System.out.println("DemoInterceptor 开始拦截：");
 		System.out.println("Before method invoking");
 		System.out.println("action key:" + inv.getActionKey());
 		System.out.println("controller key:" + inv.getControllerKey());
