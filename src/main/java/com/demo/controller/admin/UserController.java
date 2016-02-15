@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.demo.aop.DemoInterceptor;
 import com.demo.aop.UserInterceptor;
+import com.demo.model.Blog;
 import com.demo.model.User;
 import com.jfinal.aop.Before;
 import com.jfinal.core.Controller;
@@ -12,7 +13,6 @@ import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.IAtom;
 import com.jfinal.plugin.activerecord.Page;
 import com.jfinal.plugin.activerecord.Record;
-import com.jfinal.render.Render;
 
 /**
  * Description: 
@@ -174,6 +174,21 @@ public class UserController extends Controller {
 			}
 		});
 		renderText(" " + succeed);
+	}
+	
+	/**
+	 * 表关联操作，通过User中getBlogList()方法获取blogList
+	 */
+	public void getBlogList() {
+		User user = userDao.findById("3");
+		List<Blog> blogList = user.getBlogs();
+		StringBuffer titleSb = new StringBuffer();
+		if(null != blogList && blogList.size() > 0){
+			for(Blog blog : blogList){
+				titleSb.append(blog.getTitle() + ",");
+			}
+		}
+		renderText(titleSb.toString());
 	}
 	
 }

@@ -4,8 +4,8 @@ import java.util.List;
 
 import com.demo.aop.BlogInterceptor;
 import com.demo.aop.Tx;
-import com.demo.base.BaseBlog;
 import com.demo.model.Blog;
+import com.demo.model.User;
 import com.demo.service.BlogService;
 import com.jfinal.aop.Before;
 import com.jfinal.aop.Enhancer;
@@ -118,6 +118,26 @@ public class BlogController extends Controller {
 		BlogService service = Enhancer.enhance(BlogService.class, Tx.class);
 		service.inject();
 		renderText("injectBlog");
+	}
+	
+	/**
+	 * 表关联操作
+	 */
+	public void relation() {
+		String sql = "select b.*, u.user_name from t_blog b inner join t_user u on b.user_id = u.userId where b.blog_id = ?";
+		Blog blog = Blog.dao.findFirst(sql, 1);
+		String name = blog.getStr("user_name");
+		renderText(name);
+	}
+	
+	/**
+	 * 表关联操作，通过Blog中getUser()方法获取相关的User
+	 */
+	public void getUser() {
+		Blog blogDao = new Blog();
+		blogDao = blogDao.findById("5");
+		User user = blogDao.getUser();
+		renderText(user.getUserName());
 	}
 	
 }

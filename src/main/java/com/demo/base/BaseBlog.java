@@ -33,4 +33,12 @@ public abstract class BaseBlog<M extends BaseBlog<M>> extends Model<M> implement
 		return get("content");
 	}
 
+	public void setUserId(java.lang.Integer userId) {
+		set("user_id", userId);
+	}
+
+	public java.lang.Integer getUserId() {
+		return get("user_id");
+	}
+
 }
