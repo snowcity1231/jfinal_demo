@@ -18,9 +18,13 @@ public class _MappingKit {
 	public static void mapping(ActiveRecordPlugin arp) {
 		arp.addMapping("t_account", "account_id", Account.class);
 		arp.addMapping("t_blog", "blog_id", Blog.class);
+		arp.addMapping("t_role", "role_id", Role.class);
 		arp.addMapping("t_staff", "staff_id", Staff.class);
 		arp.addMapping("t_user", "userId", User.class);
 		arp.addMapping("t_user_record", "user_id", UserRecord.class);
+		// Composite Primary Key order: role_id,user_id
+		//复合主键配置
+		arp.addMapping("t_user_role", "role_id,user_id", UserRole.class);
 	}
 }
 

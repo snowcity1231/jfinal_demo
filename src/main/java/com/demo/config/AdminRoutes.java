@@ -2,6 +2,7 @@ package com.demo.config;
 
 import com.demo.controller.admin.AdminController;
 import com.demo.controller.admin.UserController;
+import com.demo.controller.admin.UserRoleController;
 import com.jfinal.config.Routes;
 
 
@@ -22,6 +23,7 @@ public class AdminRoutes extends Routes{
 	public void config() {
 		add("/admin", AdminController.class, "/jsp");
 		add("/admin/user", UserController.class, "/jsp");
+		add("/userRole", UserRoleController.class, "/jsp");
 		
 	}
 
