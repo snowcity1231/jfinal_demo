@@ -85,7 +85,8 @@ public class MyJFinalConfig extends JFinalConfig {
 		System.out.println("DruidPlugin 配置完成");
 		me.add(dp);
 		
-		ActiveRecordPlugin arp = new ActiveRecordPlugin(dp);
+		//指定configName为ds1
+		ActiveRecordPlugin arp = new ActiveRecordPlugin("ds1", dp);
 		_MappingKit.mapping(arp);
 		me.add(arp);
 //		//表的主键名默认为"id"
@@ -93,6 +94,14 @@ public class MyJFinalConfig extends JFinalConfig {
 //		//表的主键名称为"userId"
 //		arp.addMapping("user", "userId", User.class);
 //		me.add(arp);
+		
+		//配置多数据源
+		DruidPlugin dp2 = new DruidPlugin(p.get("url2"), p.get("username"), p.get("password"), p.get("driverClassName"));
+		me.add(dp2);
+		//指定configName为ds1
+		ActiveRecordPlugin arp2 = new ActiveRecordPlugin("ds2", dp2);
+		_MappingKit.mapping(arp2);
+		me.add(arp2);
 		
 		me.add(new EhCachePlugin("src/main/resources/ehcache.xml"));
 	}

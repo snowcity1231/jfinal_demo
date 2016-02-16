@@ -191,5 +191,34 @@ public class UserController extends Controller {
 		renderText(titleSb.toString());
 	}
 	
+	/**
+	 * 对数据源2数据进行操作
+	 */
+	public void saveByDS2() {
+		User user = new User();
+		user.setUserName("admin");
+		user.setPassword("abc");
+		user.setAge(11);
+		//使用use方法切换到另一数据源
+		user.use("ds2").save();
+		renderText(user.toJson());
+	}
+	
+	/**
+	 * 使用Db+Record，多数据源操作
+	 */
+	public void recordDs2() {
+		try{
+			//先创建的数据源会成为主数据源，可以省略configName
+			Record user = Db.findById("t_user", "userId", 3);
+			user.set("age", 18);
+			//切换到第二个数据源
+			Db.use("ds2").update("t_user", "userId", user);
+			renderText(user.toJson());
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
 	
 }

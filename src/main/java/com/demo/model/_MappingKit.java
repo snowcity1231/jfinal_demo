@@ -23,7 +23,6 @@ public class _MappingKit {
 		arp.addMapping("t_user", "userId", User.class);
 		arp.addMapping("t_user_record", "user_id", UserRecord.class);
 		// Composite Primary Key order: role_id,user_id
-		//复合主键配置
 		arp.addMapping("t_user_role", "role_id,user_id", UserRole.class);
 	}
 }
