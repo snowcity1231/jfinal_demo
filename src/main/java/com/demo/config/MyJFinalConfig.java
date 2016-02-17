@@ -103,6 +103,7 @@ public class MyJFinalConfig extends JFinalConfig {
 		_MappingKit.mapping(arp2);
 		me.add(arp2);
 		
+		//配置缓存插件
 		me.add(new EhCachePlugin("src/main/resources/ehcache.xml"));
 	}
 

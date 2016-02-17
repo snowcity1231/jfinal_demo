@@ -1,5 +1,6 @@
 package com.demo.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.demo.aop.BlogInterceptor;
@@ -13,7 +14,11 @@ import com.jfinal.core.Controller;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Page;
 import com.jfinal.plugin.activerecord.Record;
+import com.jfinal.plugin.ehcache.CacheInterceptor;
 import com.jfinal.plugin.ehcache.CacheKit;
+import com.jfinal.plugin.ehcache.CacheName;
+import com.jfinal.plugin.ehcache.EvictInterceptor;
+import com.jfinal.plugin.ehcache.IDataLoader;
 import com.jfinal.upload.UploadFile;
 
 /**
@@ -97,10 +102,14 @@ public class BlogController extends Controller {
 	 * 根据key获取缓存数据
 	 */
 	public void getFromCache() {
-		String cacheName = "cacheBlogList";
-		String key = "blogList";
-		List<Blog> list = CacheKit.get(cacheName, key);
-		renderText(list.size() + "");
+		try{
+			String cacheName = "cacheBlogList";
+			String key = "blogList";
+			List<Blog> list = CacheKit.get(cacheName, key);
+			renderText(list.size() + "");
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -108,6 +117,65 @@ public class BlogController extends Controller {
 	 */
 	public void removeListFromCache() {
 		CacheKit.remove("cacheBlogList", "blogList");
+		renderText("ok");
+	}
+	
+	/**
+	 * CacheInterceptor可以将action所需数据全部缓存起来，下次请求到来时如果cache存在则直接使用数据并render,而不会去调用action
+	 * 配合CacheName注解可以取代使用默认的actionKey作为cacheName
+	 * 需要再ehcache.xml中配置名为blogList的cache
+	 */
+	@Before(CacheInterceptor.class)
+	@CacheName("cacheBlogList")
+	public void listCache() {
+		List<Blog> blogList = Blog.dao.find("select * from t_blog");
+		System.out.println(blogList.size());
+		setAttr("blogList", blogList);
+		setAttr("title", "列表");
+		renderFreeMarker("/freemarker/blog.ftl");
+	}
+	
+	/**
+	 * EvictInterceptor可以根据CacheName注解自动清除缓存
+	 */
+	@Before(EvictInterceptor.class)
+	@CacheName("cacheBlogList")
+	public void update() {
+		boolean b = getModel(Blog.class).update();
+		renderText(String.valueOf(b));
+	}
+	
+	/**
+	 * 使用CacheKit操作缓存
+	 */
+	public void listByCacheKit() {
+		List<Blog> blogList = CacheKit.get("cacheBlogList", "blogList");
+		if(blogList == null) {
+			blogList = Blog.dao.find("select * from t_blog");
+			CacheKit.put("cacheBlogList", "blogList", blogList);
+		}
+		setAttr("title", "列表");
+		setAttr("blogList", blogList);
+		renderFreeMarker("/freemarker/blog.ftl");
+	}
+	
+	/**
+	 * CacheKit的get()方法提供了一个IDataLoader接口，接口中load方法在缓存值不存在时才会被调用
+	 */
+	public void listByCacheKitLoader() {
+		setAttr("title", "标题-loader");
+		List<Blog> blogList = CacheKit.get("cacheBlogList", "blogList", new IDataLoader() {
+			@Override
+			public Object load() {
+				return Blog.dao.find("select * from t_blog");
+			}
+		});
+		setAttr("blogList", blogList);
+		renderFreeMarker("/freemarker/blog.ftl");
+	}
+	
+	public void removeList() {
+		CacheKit.removeAll("cacheBlogList");
 		renderText("ok");
 	}
 	
