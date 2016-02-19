@@ -3,6 +3,7 @@ package com.demo.config;
 import com.demo.controller.AccountController;
 import com.demo.controller.BlogController;
 import com.demo.controller.IndexController;
+import com.demo.controller.RedisController;
 import com.jfinal.config.Routes;
 
 /**
@@ -23,6 +24,7 @@ public class FrontRoutes extends Routes {
 		add("/index", IndexController.class, "/jsp");
 		add("/blog", BlogController.class, "/jsp");
 		add("/account", AccountController.class, "/jsp");
+		add("/redis", RedisController.class);
 	}
 
 }

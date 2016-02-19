@@ -111,11 +111,11 @@ public class MyJFinalConfig extends JFinalConfig {
 		//先创建的RedisPlugin对象为主缓存对象，主缓存对象可以通过Redis.use()直接获取，否则需要提供cacheName参数，例如Redis.use("news")
 		//用于缓存bbs模块的redis服务
 		//记得本机允许redis服务
-		RedisPlugin bbsRedis = new RedisPlugin("bbs", "localhost", 6379, "123456");
+		RedisPlugin bbsRedis = new RedisPlugin("bbs", "localhost");
 		me.add(bbsRedis);
 		//用于缓存news模块的redis服务
-		//RedisPlugin newsRedis = new RedisPlugin("news", "192.169.1.1");
-		//me.add(newsRedis);
+		RedisPlugin newsRedis = new RedisPlugin("news", "localhost", 6379, "123456");
+		me.add(newsRedis);
 	}
 
 	/**

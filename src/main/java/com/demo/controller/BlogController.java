@@ -19,6 +19,8 @@ import com.jfinal.plugin.ehcache.CacheKit;
 import com.jfinal.plugin.ehcache.CacheName;
 import com.jfinal.plugin.ehcache.EvictInterceptor;
 import com.jfinal.plugin.ehcache.IDataLoader;
+import com.jfinal.plugin.redis.Cache;
+import com.jfinal.plugin.redis.Redis;
 import com.jfinal.upload.UploadFile;
 
 /**
