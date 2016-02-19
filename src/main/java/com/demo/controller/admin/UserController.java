@@ -7,6 +7,7 @@ import com.demo.aop.DemoInterceptor;
 import com.demo.aop.UserInterceptor;
 import com.demo.model.Blog;
 import com.demo.model.User;
+import com.demo.validator.LoginValidator;
 import com.jfinal.aop.Before;
 import com.jfinal.core.Controller;
 import com.jfinal.plugin.activerecord.Db;
@@ -39,6 +40,10 @@ public class UserController extends Controller {
 		renderText("welcome to JFinal, " + user + "!");
 	}
 	
+	/**
+	 * Validator配置方式与拦截器完全一样
+	 */
+	@Before(LoginValidator.class)
 	public void login(){
 		String userName = getPara("userName");
 		String pwd = getPara("password");
