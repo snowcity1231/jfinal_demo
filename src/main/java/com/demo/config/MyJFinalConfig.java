@@ -11,13 +11,11 @@ import com.jfinal.config.Interceptors;
 import com.jfinal.config.JFinalConfig;
 import com.jfinal.config.Plugins;
 import com.jfinal.config.Routes;
+import com.jfinal.i18n.I18nInterceptor;
 import com.jfinal.kit.Prop;
 import com.jfinal.kit.PropKit;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
-import com.jfinal.plugin.activerecord.tx.TxByActionKeyRegex;
 import com.jfinal.plugin.activerecord.tx.TxByActionKeys;
-import com.jfinal.plugin.activerecord.tx.TxByMethodRegex;
-import com.jfinal.plugin.activerecord.tx.TxByMethods;
 import com.jfinal.plugin.druid.DruidPlugin;
 import com.jfinal.plugin.ehcache.EhCachePlugin;
 import com.jfinal.plugin.redis.RedisPlugin;
@@ -49,6 +47,11 @@ public class MyJFinalConfig extends JFinalConfig {
 		//默认视图配置为JSP
 		me.setViewType(ViewType.JSP);
 //		me.setViewType(ViewType.FREE_MARKER);
+		
+		//配置国际化的默认baseName为'i18n'
+		me.setI18nDefaultBaseName("i18n");
+		//设置默认locale
+//		me.setI18nDefaultLocale("en_US");
 		
 	}
 
@@ -140,6 +143,15 @@ public class MyJFinalConfig extends JFinalConfig {
 		//me.add(new TxByActionKeyRegex("/trans.*"));
 		//对指定的actionKey进行拦截
 		me.add(new TxByActionKeys("/account/trans", "/account/save","/account/update"));
+		
+		//将国际化组件I18nInterceptor配置成全局拦截器
+		//即可在freemarker中通过_res对象来获取国际化数据
+		//默认变量名为_res，使用默认Locale
+		//me.add(new I18nInterceptor());
+		//默认locale设置为zh_CN，默认变量名设置为res
+		me.add(new I18nInterceptor("zh_CN", "res"));
+		//isSwitch设置为true，会根据locale动态切换视图
+		//me.add(new I18nInterceptor("zh_CN", "res", true));
 	}
 
 	/**
