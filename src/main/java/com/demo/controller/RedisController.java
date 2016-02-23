@@ -33,13 +33,28 @@ public class RedisController extends Controller {
 		}
 	}
 
-	public void save() {
+	public void incr() {
 		try{
 			System.out.println(Redis.use().incr("b"));;
 			renderText(String.valueOf(Redis.use().getCounter("b")));
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	/**
+	 * 根据参数向redis中存数据
+	 */
+	public void saveStrByPara() {
+		try{
+			String key = getPara(0);
+			String value = getPara(1);
+			String result = Redis.use().set(key, value);
+			renderText(result);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 	/**
@@ -64,6 +79,18 @@ public class RedisController extends Controller {
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+	}
+	
+	/**
+	 * 根据参数获取类型为String的值
+	 */
+	public void getStrByKey() {
+		try{
+			String key = getPara(0);
+			String value = (String) Redis.use().get(key);
+			renderText(value);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }
